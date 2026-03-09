@@ -1,11 +1,12 @@
 # FAST-LIO to HDMapping simplified instruction
 
 ## Step 1 (prepare data)
-Download the dataset `reg-1.bag` by clicking [link](https://cloud.cylab.be/public.php/dav/files/7PgyjbM2CBcakN5/reg-1.bag) (it is part of [Bunker DVI Dataset](https://charleshamesse.github.io/bunker-dvi-dataset)).
+Download the dataset `kitti_seq00_ros1.bag` by clicking [link](https://huggingface.co/datasets/kubchud/kitti_to_ros/resolve/main/kitti_seq01_ros1.bag) (it is part of [kitti_seq](https://github.com/Jakubach/kitti_to_ros)).
 
-File 'reg-1.bag' is an input for further calculations.
-It should be located in '~/hdmapping-benchmark/data'.
+### Extract the dataset
 
+File `kitti_seq00_ros1.bag` is an input for further calculations.
+It should be located in `~/hdmapping-benchmark/data`.  
 
 ## Step 2 (prepare docker)
 ```shell
@@ -22,7 +23,7 @@ docker build -t fast-lio_noetic .
 cd ~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping
 chmod +x docker_session_run-ros1-fast-lio.sh 
 cd ~/hdmapping-benchmark/data
-~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping/docker_session_run-ros1-fast-lio.sh reg-1.bag .
+~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping/docker_session_run-ros1-fast-lio.sh kitti_seq00_ros1.bag .
 ```
 
 ## Step 4 (Open and visualize data)
