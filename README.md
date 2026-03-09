@@ -1,103 +1,46 @@
-# [FAST-LIO](https://github.com/hku-mars/FAST_LIO.git) converter to [HDMapping](https://github.com/MapsHD/HDMapping)
+# FAST-LIO to HDMapping simplified instruction
 
-## Hint
+## Step 1 (prepare data)
+Download the dataset `kitti_seq00_ros1.bag` by clicking [link](https://huggingface.co/datasets/kubchud/kitti_to_ros/resolve/main/kitti_seq01_ros1.bag) (it is part of [kitti_seq](https://github.com/Jakubach/kitti_to_ros)).
 
-Please change branch to [Bunker-DVI-Dataset-reg-1](https://github.com/MapsHD/benchmark-FAST-LIO-to-HDMapping/tree/Bunker-DVI-Dataset-reg-1) for quick experiment.  
+### Extract the dataset
 
+File `kitti_seq00_ros1.bag` is an input for further calculations.
+It should be located in `~/hdmapping-benchmark/data`.  
 
-## Example Dataset: 
-
-Download the dataset from [Bunker DVI Dataset](https://charleshamesse.github.io/bunker-dvi-dataset/)  
-
-## Intended use 
-
-This small toolset allows to integrate SLAM solution provided by [fast-lio](https://github.com/hku-mars/FAST_LIO.git) with [HDMapping](https://github.com/MapsHD/HDMapping).
-This repository contains ROS 1 workspace that :
-  - submodule to tested revision of FAST-LIO
-  - a converter that listens to topics advertised from odometry node and save data in format compatible with HDMapping.
-
-## Building
-
-Clone the repo
+## Step 2 (prepare docker)
 ```shell
-mkdir -p /test_ws/src
-cd /test_ws/src
-git clone https://github.com/marcinmatecki/FAST-LIO-to-HDMapping.git --recursive
-cd ..
-catkin_make
+mkdir -p ~/hdmapping-benchmark
+cd ~/hdmapping-benchmark
+git clone https://github.com/MapsHD/benchmark-FAST-LIO-to-HDMapping --recursive
+cd benchmark-FAST-LIO-to-HDMapping
+git checkout kitti
+docker build -t fast-lio_noetic .
 ```
 
-## Dependencies
-
+## Step 3 (run docker, file 'kitti_seq00_ros1.bag' should be in '~/hdmapping-benchmark/data')
 ```shell
-sudo apt install -y nlohmann-json3-dev
+cd ~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping
+chmod +x docker_session_run-ros1-fast-lio.sh 
+cd ~/hdmapping-benchmark/data
+~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping/docker_session_run-ros1-fast-lio.sh kitti_seq00_ros1.bag .
 ```
 
-## Usage - data SLAM:
+## Step 4 (Open and visualize data)
+Expected data should appear in ~/hdmapping-benchmark/data/output_hdmapping-fast-lio
+Use tool [multi_view_tls_registration_step_2](https://github.com/MapsHD/HDMapping) to open session.json from ~/hdmapping-benchmark/data/output_hdmapping-fast-lio.
 
-Prepare recorded bag with estimated odometry:
+You should see following data in folder '~/hdmapping-benchmark/data/output_hdmapping-FAST-LIO'
 
-In first terminal record bag:
-```shell
-rosbag record /cloud_registered /Odometry
-```
+lio_initial_poses.reg
 
-and start odometry:
-```shell 
-cd /test_ws/
-source ./devel/setup.sh # adjust to used shell
-For launch, check https://github.com/hku-mars/FAST_LIO/
-rosbag play your bag file
-```
+poses.reg
 
-## Usage - conversion:
+scan_lio_*.laz
 
-```shell
-cd /test_ws/
-source ./devel/setup.sh # adjust to used shell
-rosrun fast-lio-to-hdmapping listener <recorded_bag> <output_dir>
-```
+session.json
 
-## Record the bag file:
+trajectory_lio_*.csv
 
-```shell
-rosbag record /cloud_registered /Odometry -O {your_directory_for_the_recorded_bag}
-```
-
-
-## Modify 
-```shell 
-  src/FAST-LIO-to-HDMapping/src/FAST_LIO/config/ouster64.yaml
-
-  lid_topic: "/os_cloud_node/points"
-  imu_topic: "/os_cloud_node/imu"
-
-  to:
-  
-  lid_topic: "/os1_cloud_node1/points"
-  imu_topic: "/os1_cloud_node1/imu"
-```
-
-## FAST-LIO Launch:
-
-```shell
-cd /test_ws/
-source ./devel/setup.sh # adjust to used shell
-roslaunch fast_lio mapping_ouster64.launch 
-rosbag play your bag file
-```
-
-## During the record (if you want to stop recording earlier) / after finishing the bag:
-
-```shell
-In the terminal where the ros record is, interrupt the recording by CTRL+C
-Do it also in ros launch terminal by CTRL+C.
-```
-
-## Usage - Conversion (ROS bag to HDMapping, after recording stops):
-
-```shell
-cd /test_ws/
-source ./devel/setup.sh # adjust to used shell
-rosrun fast-lio-to-hdmapping listener <recorded_bag> <output_dir>
-```
+## Contact email
+januszbedkowski@gmail.com
