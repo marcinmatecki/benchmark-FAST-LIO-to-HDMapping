@@ -18,7 +18,7 @@ git checkout kitti
 docker build -t fast-lio_noetic .
 ```
 
-## Step 3 (run docker, file 'reg-1.bag' should be in '~/hdmapping-benchmark/data')
+## Step 3 (run docker, file 'kitti_seq00_ros1.bag' should be in '~/hdmapping-benchmark/data')
 ```shell
 cd ~/hdmapping-benchmark/benchmark-FAST-LIO-to-HDMapping
 chmod +x docker_session_run-ros1-fast-lio.sh 
@@ -27,8 +27,8 @@ cd ~/hdmapping-benchmark/data
 ```
 
 ## Step 4 (Open and visualize data)
-Expected data should appear in ~/hdmapping-benchmark/data/output_hdmapping-loam
-Use tool [multi_view_tls_registration_step_2](https://github.com/MapsHD/HDMapping) to open session.json from ~/hdmapping-benchmark/data/output_hdmapping-FAST-LIO.
+Expected data should appear in ~/hdmapping-benchmark/data/output_hdmapping-fast-lio
+Use tool [multi_view_tls_registration_step_2](https://github.com/MapsHD/HDMapping) to open session.json from ~/hdmapping-benchmark/data/output_hdmapping-fast-lio.
 
 You should see following data in folder '~/hdmapping-benchmark/data/output_hdmapping-FAST-LIO'
 
