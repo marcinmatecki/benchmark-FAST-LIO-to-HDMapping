@@ -14,7 +14,7 @@ mkdir -p ~/hdmapping-benchmark
 cd ~/hdmapping-benchmark
 git clone https://github.com/MapsHD/benchmark-FAST-LIO-to-HDMapping --recursive
 cd benchmark-FAST-LIO-to-HDMapping
-git checkout Bunker-DVI-Dataset-reg-1
+git checkout kitti
 docker build -t fast-lio_noetic .
 ```
 
