@@ -1,7 +1,7 @@
 # FAST-LIO to HDMapping simplified instruction
 
 ## Step 1 (prepare data)
-Download the dataset `kitti_seq00_ros1.bag` by clicking [link](https://huggingface.co/datasets/kubchud/kitti_to_ros/resolve/main/kitti_seq01_ros1.bag) (it is part of [kitti_seq](https://github.com/Jakubach/kitti_to_ros)).
+Download the dataset `kitti_seq00_ros1.bag` by clicking [link](https://huggingface.co/datasets/kubchud/kitti_to_ros/resolve/main/kitti_seq00_ros1.bag) (it is part of [kitti_seq](https://github.com/Jakubach/kitti_to_ros)).
 
 ### Extract the dataset
 
